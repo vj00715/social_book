@@ -99,7 +99,7 @@ def login(request):
 
 def logout(request):
     auth_out(request)
-    return redirect("login")
+    return redirect("loginUser")
 
 
 def author_and_sellers(request):
@@ -116,6 +116,7 @@ def book_ext_verify(book_name, cover_img_name):
         return True
     else:
         return False
+
 
 def bookupload(request):
     if request.user.is_authenticated:
@@ -154,9 +155,11 @@ def bookupload(request):
     else:
         return redirect("login.html")
 
+
 def showbook(request):
     data = Book.objects.all()
-    return render(request, 'showbook.html', {"allbook": data})
+    return render(request, "showbook.html", {"allbook": data})
+
 
 def bookwrapper(bookfunc):
     def datachecker(request):
@@ -164,13 +167,9 @@ def bookwrapper(bookfunc):
         if count > 0:
             return bookfunc(request)
         else:
-            messages.add_message(
-                request,
-                messages.ERROR,
-                "your have not book uploaded",
-                fail_silently=True,
-            )
+            messages.add_message(request, messages.ERROR, "your have not book uploaded")
             return redirect("bookupload")
+
     return datachecker
 
 
@@ -212,6 +211,7 @@ def accestokendatafetch(request):
     #     print("no data")
     return HttpResponse("<h1>Access data</h1>")
 
+
 def testing(request):
     # using psycopg2 to fetch data
     print("-" * 30, "test is running", "-" * 30)
@@ -234,8 +234,9 @@ def testing(request):
     # ------------------------------------- Good pratice This Really Life ------------------------------------------------
     queryset = User.objects.all()
     data = list(queryset.values("id", "username", "public_visibility"))
-    print(data)
-    df = pd.DataFrame(data)
+    # print(data)
+    df = pd.DataFrame(data)[:3]
+
     #  Covert dataframe to dict
     df_dict = df.to_dict(
         orient="records"

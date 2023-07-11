@@ -36,7 +36,6 @@
           </div>
         </div>
       </div>
-      {% include 'message.html' %}
       <!-- Default Basic Forms Start -->
       <div class="pd-20 card-box mb-30">
         <div class="clearfix">
@@ -55,6 +54,7 @@
             >
           </div>
         </div>
+        {% include 'message.html' %}
         <form method="post" enctype="multipart/form-data">
           {% csrf_token %}
           <div class="form-group">
@@ -113,35 +113,6 @@
           </button>
         </form>
         <div class="table-responsive">
-          <table class="table table-striped">
-            <thead>
-              <tr>
-                <th scope="col">Title</th>
-                <th scope="col">Author</th>
-                <th scope="col">Thumbnail</th>
-                <th scope="col">Book</th>
-                <th scope="col">Price</th>
-              </tr>
-            </thead>
-            {% for book in yourbook %}
-            <tbody>
-              <tr>
-                <th scope="row">{{book.title}}</th>
-                <td>{{book.username}}</td>
-                <td>
-                  <img
-                    src="{{book.coverimg.url}}"
-                    alt="Girl in a jacket"
-                    width="80"
-                    height="80"
-                  />
-                </td>
-                <td><a href="{{book.bookfile.url}}" target="_blank">View Book</a></td>
-                <td>{{book.price}}</td>
-              </tr>
-            </tbody>
-            {% endfor %}
-          </table>
         </div>
         <div class="collapse collapse-box" id="basic-form1">
           <div class="code-box">
